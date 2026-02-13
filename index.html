@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Said Ospina - Full Stack Web Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="img/logo.ico">              <!-- HTML4 (Legacy) -->
+    <link rel="icon" sizes="64x64" href="img/logo.png">         <!-- HTML5 -->
+    <link rel="apple-touch-icon" sizes="180x180"
+            href="img/logo.png">                 <!-- iPhone/iPad -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --secondary: #06b6d4;
+            --accent: #3b82f6;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+            --gray: #64748b;
+            --gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+            --dark-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                var(--dark-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .card-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: var(--dark-gradient);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(14, 165, 233, 0.03) 0px,
+                    rgba(14, 165, 233, 0.03) 1px,
+                    transparent 1px,
+                    transparent 40px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(14, 165, 233, 0.03) 0px,
+                    rgba(14, 165, 233, 0.03) 1px,
+                    transparent 1px,
+                    transparent 40px
+                );
+            opacity: 0.5;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 20%;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 40px rgba(14, 165, 233, 0.3);
+            margin: 0 auto 20px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 40px rgba(14, 165, 233, 0.3);
+            }
+            50% {
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 60px rgba(14, 165, 233, 0.5);
+            }
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .currency-toggle {
+            position: relative;
+            z-index: 1;
+            margin-top: 15px;
+        }
+
+        .currency-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .currency-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .currency-btn i {
+            margin-right: 8px;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .contact-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2);
+            border-color: var(--primary);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .contact-item a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            border: 2px solid var(--light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.25);
+            border-color: var(--primary);
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .service-card h3 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .price-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--light);
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .maintenance-price {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .package-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 3px solid var(--primary);
+        }
+
+        .package-card h3 {
+            color: var(--primary);
+        }
+
+        .package-includes {
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .portfolio-section {
+            margin-top: 40px;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: var(--light);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
+        }
+
+        .portfolio-item i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .portfolio-item a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .portfolio-item a:hover {
+            color: var(--primary);
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--dark-gradient);
+            border-radius: 16px;
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .cta-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4);
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .services-grid,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="header">
+            <img src="img/Perfil.png" alt="Said Ospina" class="profile-img">
+            <h1>Said Ospina</h1>
+            <p id="headerSubtitle" data-es="Desarrollador Web Full Stack" data-en="Full Stack Web Developer">Desarrollador Web Full Stack</p>
+            <div class="currency-toggle">
+                <button class="currency-btn" id="currencyToggle">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span id="currencyText">Switch to USD / English</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Contact Section -->
+            <h2 class="section-title" data-es="Contacto" data-en="Contact">Contacto</h2>
+            <div class="contact-section">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:deislersaid1418@gmail.com">deislersaid1418@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <a href="tel:+573138089058">+57 313 808 9058</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://wa.me/573138089058" target="_blank">WhatsApp</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/SaidOspina" target="_blank">github.com/SaidOspina</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-file-pdf"></i>
+                    <a href="doc/hojaDeVida.pdf" target="_blank" id="resumeLink" data-es="Descargar Hoja de Vida (PDF)" data-en="Download Resume (PDF)">Descargar Hoja de Vida (PDF)</a>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <h2 class="section-title" id="servicesTitle" data-es="Servicios y Precios" data-en="Services & Pricing">Servicios y Precios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-robot"></i>
+                    <h3 id="service1Title" data-es="Chatbot WhatsApp Empresarial" data-en="Business WhatsApp Chatbot">Chatbot WhatsApp Empresarial</h3>
+                    <p id="service1Desc" data-es="Automatiza la atención al cliente" data-en="Automate customer service">Automatiza la atención al cliente con IA</p>
+                    <div class="price-section">
+                        <div class="price-label" id="initialLabel1" data-es="Inversión Inicial:" data-en="Initial Investment:">Inversión Inicial:</div>
+                        <div class="price" data-cop="250000">$250.000 COP</div>
+                        <div class="maintenance-price" data-cop="70000" data-label-es="Mensual:" data-label-en="Monthly:">Mensual: $70.000 COP</div>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <i class="fas fa-rocket"></i>
+                    <h3 id="service2Title" data-es="Página de Aterrizaje Profesional" data-en="Professional Landing Page">Página de Aterrizaje Profesional</h3>
+                    <p id="service2Desc" data-es="Landing pages optimizadas para conversión" data-en="Conversion-optimized landing pages">Landing pages optimizadas para conversión</p>
+                    <div class="price-section">
+                        <div class="price-label" id="initialLabel2" data-es="Inversión Inicial:" data-en="Initial Investment:">Inversión Inicial:</div>
+                        <div class="price" data-cop="380000">$380.000 COP</div>
+                        <div class="maintenance-price" data-cop="120000" data-label-es="Mensual:" data-label-en="Monthly:">Mensual: $120.000 COP</div>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <i class="fas fa-globe"></i>
+                    <h3 id="service3Title" data-es="Sitio Web Corporativo" data-en="Corporate Website">Sitio Web Corporativo</h3>
+                    <p id="service3Desc" data-es="Sitios web profesionales y responsive" data-en="Professional and responsive websites">Sitios web profesionales y responsive</p>
+                    <div class="price-section">
+                        <div class="price-label" id="initialLabel3" data-es="Inversión Inicial:" data-en="Initial Investment:">Inversión Inicial:</div>
+                        <div class="price" data-cop="520000">$520.000 COP</div>
+                        <div class="maintenance-price" data-cop="150000" data-label-es="Mensual:" data-label-en="Monthly:">Mensual: $150.000 COP</div>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3 id="service4Title" data-es="Tienda Virtual" data-en="E-commerce Store">Tienda Virtual</h3>
+                    <p id="service4Desc" data-es="Tienda online completa con pasarela de pago" data-en="Complete online store with payment gateway">Tienda online completa con pasarela de pago</p>
+                    <div class="price-section">
+                        <div class="price-label" id="customLabel" data-es="Contactar para cotización" data-en="Contact for pricing">Contactar para cotización</div>
+                        <div class="price" id="customQuote" data-es="Cotización Personalizada" data-en="Custom Quote">Cotización Personalizada</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package Deals -->
+            <h2 class="section-title" id="packagesTitle" data-es="Paquetes Especiales" data-en="Package Deals">Paquetes Especiales</h2>
+            <div class="services-grid">
+                <div class="service-card package-card">
+                    <i class="fas fa-box"></i>
+                    <h3 id="pack1Title" data-es="Pack Emprendedor" data-en="Entrepreneur Pack">Pack Emprendedor</h3>
+                    <div class="package-includes" id="pack1Includes" 
+                         data-es="✓ Página de Aterrizaje<br>✓ Chatbot WhatsApp" 
+                         data-en="✓ Landing Page<br>✓ WhatsApp Chatbot">
+                        ✓ Página de Aterrizaje<br>✓ Chatbot WhatsApp
+                    </div>
+                    <div class="price-section">
+                        <div class="price" data-cop="590000">$590.000 COP</div>
+                    </div>
+                </div>
+
+                <div class="service-card package-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3 id="pack2Title" data-es="Pack Negocio Digital" data-en="Digital Business Pack">Pack Negocio Digital</h3>
+                    <div class="package-includes" id="pack2Includes"
+                         data-es="✓ Sitio Web Corporativo<br>✓ Chatbot WhatsApp"
+                         data-en="✓ Corporate Website<br>✓ WhatsApp Chatbot">
+                        ✓ Sitio Web Corporativo<br>✓ Chatbot WhatsApp
+                    </div>
+                    <div class="price-section">
+                        <div class="price" data-cop="720000">$720.000 COP</div>
+                    </div>
+                </div>
+
+                <div class="service-card package-card">
+                    <i class="fas fa-store"></i>
+                    <h3 id="pack3Title" data-es="Pack Ventas Online" data-en="Online Sales Pack">Pack Ventas Online</h3>
+                    <div class="package-includes" id="pack3Includes"
+                         data-es="✓ Tienda Virtual<br>✓ Chatbot WhatsApp"
+                         data-en="✓ E-commerce Store<br>✓ WhatsApp Chatbot">
+                        ✓ Tienda Virtual<br>✓ Chatbot WhatsApp
+                    </div>
+                    <div class="price-section">
+                        <div class="price" data-cop="1050000">$1.050.000 COP</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio -->
+            <div class="portfolio-section">
+                <h2 class="section-title" id="portfolioTitle" data-es="Portafolio" data-en="Portfolio">Portafolio</h2>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <a href="https://tramitsusainsurance.com/" target="_blank">Tramit Susa Insurance</a>
+                    </div>
+                    <div class="portfolio-item">
+                        <i class="fas fa-car"></i>
+                        <a href="https://cotizaautos.com/" target="_blank">Cotiza Autos</a>
+                    </div>
+                    <div class="portfolio-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <a href="https://tuseguro-salud.com/" target="_blank">Tu Seguro Salud</a>
+                    </div>
+                    <div class="portfolio-item">
+                        <i class="fas fa-umbrella"></i>
+                        <a href="https://deltoroinsuranceflorida.com/" target="_blank">Del Toro Insurance</a>
+                    </div>
+                    <div class="portfolio-item">
+                        <i class="fas fa-book"></i>
+                        <a href="https://www.venaformarte.com/" target="_blank">Vena Formarte</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <h3 id="ctaTitle" data-es="¿Listo para transformar tu idea en realidad?" data-en="Ready to turn your idea into reality?">¿Listo para transformar tu idea en realidad?</h3>
+                <p style="margin-bottom: 20px;" id="ctaSubtitle" data-es="Contáctame y comencemos a trabajar juntos" data-en="Contact me and let's start working together">Contáctame y comencemos a trabajar juntos</p>
+                <div class="btn-group">
+                    <a href="https://wa.me/573138089058?text=Hola%20Said,%20estoy%20interesado%20en%20tus%20servicios" class="btn btn-primary" target="_blank" id="whatsappBtn">
+                        <i class="fab fa-whatsapp"></i> <span data-es="Contactar por WhatsApp" data-en="Contact via WhatsApp">Contactar por WhatsApp</span>
+                    </a>
+                    <a href="mailto:deislersaid1418@gmail.com" class="btn btn-secondary" id="emailBtn">
+                        <i class="fas fa-envelope"></i> <span data-es="Enviar Email" data-en="Send Email">Enviar Email</span>
+                    </a>
+                    <a href="doc/hojaDeVida.pdf" class="btn btn-secondary" target="_blank" id="downloadBtn">
+                        <i class="fas fa-download"></i> <span data-es="Descargar Hoja de Vida" data-en="Download Resume">Descargar Hoja de Vida</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Currency conversion and language functionality
+        const EXCHANGE_RATE = 4200; // 1 USD = 4200 COP (approximate)
+        let currentLanguage = 'es'; // Start in Spanish
+
+        const currencyToggle = document.getElementById('currencyToggle');
+        const currencyText = document.getElementById('currencyText');
+        const prices = document.querySelectorAll('.price[data-cop], .maintenance-price[data-cop]');
+
+        // Function to update language
+        function updateLanguage(lang) {
+            // Update all elements with data-es and data-en attributes
+            document.querySelectorAll('[data-es][data-en]').forEach(element => {
+                if (element.tagName === 'A' || element.tagName === 'SPAN') {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                } else if (element.classList.contains('package-includes')) {
+                    element.innerHTML = element.getAttribute(`data-${lang}`);
+                } else {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+
+            // Update WhatsApp link with appropriate language
+            const whatsappBtn = document.querySelector('a[href*="wa.me"]');
+            if (lang === 'es') {
+                whatsappBtn.href = 'https://wa.me/573138089058?text=Hola%20Said,%20estoy%20interesado%20en%20tus%20servicios';
+            } else {
+                whatsappBtn.href = 'https://wa.me/573138089058?text=Hi%20Said,%20I\'m%20interested%20in%20your%20services';
+            }
+
+            // Update document language attribute
+            document.documentElement.lang = lang;
+        }
+
+        currencyToggle.addEventListener('click', function() {
+            if (currentLanguage === 'es') {
+                // Switch to English/USD
+                currentLanguage = 'en';
+                currencyText.textContent = 'Cambiar a COP / Español';
+                currencyToggle.querySelector('i').className = 'fas fa-peso-sign';
+                
+                // Update language
+                updateLanguage('en');
+                
+                // Update prices to USD
+                prices.forEach(priceElement => {
+                    const copValue = parseInt(priceElement.getAttribute('data-cop'));
+                    const usdValue = (copValue / EXCHANGE_RATE).toFixed(2);
+                    
+                    if (priceElement.classList.contains('maintenance-price')) {
+                        const label = priceElement.getAttribute('data-label-en') || 'Monthly:';
+                        priceElement.textContent = `${label} $${usdValue} USD`;
+                    } else {
+                        priceElement.textContent = `$${usdValue} USD`;
+                    }
+                });
+            } else {
+                // Switch to Spanish/COP
+                currentLanguage = 'es';
+                currencyText.textContent = 'Switch to USD / English';
+                currencyToggle.querySelector('i').className = 'fas fa-dollar-sign';
+                
+                // Update language
+                updateLanguage('es');
+                
+                // Update prices to COP
+                prices.forEach(priceElement => {
+                    const copValue = parseInt(priceElement.getAttribute('data-cop'));
+                    const formattedCop = copValue.toLocaleString('es-CO');
+                    
+                    if (priceElement.classList.contains('maintenance-price')) {
+                        const label = priceElement.getAttribute('data-label-es') || 'Mensual:';
+                        priceElement.textContent = `${label} $${formattedCop} COP`;
+                    } else {
+                        priceElement.textContent = `$${formattedCop} COP`;
+                    }
+                });
+            }
+        });
+
+        // Animation for service cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.service-card, .portfolio-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '0';
+                            entry.target.style.transform = 'translateY(20px)';
+                            entry.target.style.transition = 'all 0.5s ease';
+                            
+                            setTimeout(() => {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
+                            }, 50);
+                        }, index * 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => observer.observe(card));
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
